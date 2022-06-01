@@ -1,0 +1,71 @@
+<div class="inline">
+<div class="search">
+    <form #form="ngForm" (submit)="onSubmit()">
+        <input type="text" placeholder="Search city" name="city" [(ngModel)]="cityName">
+    </form>
+</div>
+<div class="pick">
+    <select #mySelect class="picker" (change)="onChange(mySelect.value)">
+        <option value="American">American</option>
+        <option value="Metric">Metric</option>
+    </select>
+</div></div>
+<div class="container" *ngIf="weatherData">
+  <div class="upper-data">
+    <img src="../assets/cold-landscape.jpg" alt="cold-landscape" *ngIf="weatherData.list[0].main.temp < 283">
+    <img src="../assets/hot-landscape.jpg" alt="hot-landscape" *ngIf="weatherData.list[0].main.temp >= 283">
+    <div class="weather-data">
+      <div class="location">{{weatherData.city.name}}</div>
+      <div class="temperature" *ngIf="unit === 'American' || unit === undefined">{{(weatherData.list[0].main.temp - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F</div>
+      <div class="temperature" *ngIf="unit === 'Metric'">{{weatherData.list[0].main.temp - 273.15 | number: '1.0-0'}}°C</div>
+    </div>
+  </div>
+  <div class="lower-data">
+    <div class="more-info-label">Weather in {{weatherData.city.name}} on {{weatherData.list[0].dt_txt | date}} by {{weatherData.list[0].dt_txt | timing}}</div>
+    <div class="more-info-container">
+      <div class="info-block">
+        <div class="info-block-label">
+          <img src="../assets/max-temp.png" alt="max-temp" id="img1">
+          <div class="info-block-value" *ngIf="unit === 'American' || unit === undefined">
+            Expected High: {{(weatherData.list[0].main.temp_max - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F
+          </div>
+          <div class="info-block-value" *ngIf="unit === 'Metric'">
+            Expected High: {{weatherData.list[0].main.temp_max - 273.15 | number: '1.0-0'}}°C
+          </div>
+        </div>
+        <div class="info-block-label">
+          <img src="../assets/min-temp.png" alt="min-temp" id="img2">
+          <div class="info-block-value" *ngIf="unit === 'American' || unit === undefined">
+            Expected Low: {{(weatherData.list[0].main.temp_min - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F
+          </div>
+          <div class="info-block-value" *ngIf="unit === 'Metric'">
+            Expected Low: {{weatherData.list[0].main.temp_min - 273.15 | number: '1.0-0'}}°C
+          </div>
+        </div>
+        <div class="info-block-label">
+          <img src="../assets/chance-precip.png" alt="chance-precip" id="img3">
+          <div class="info-block-value" *ngIf="weatherData.list[0].main.temp > 275">
+            Rain Chance: {{weatherData.list[0].pop * 100}}%
+          </div>
+          <div class="info-block-value" *ngIf="weatherData.list[0].main.temp > 270 && weatherData.list[0].main.temp <= 275">
+            Sleet Chance: {{weatherData.list[0].pop * 100}}%
+          </div>
+          <div class="info-block-value" *ngIf="weatherData.list[0].main.temp <= 270">
+            Snow Chance: {{weatherData.list[0].pop * 100}}%
+          </div>
+        </div>
+        <div class="info-block-label">
+          <img src="../assets/wind.png" alt="wind" id="img4">
+          <div class="info-block-value" *ngIf="unit === 'American' || unit === undefined">
+            Wind: {{weatherData.list[0].wind.speed * 2.237 | number: '1.0-0'}}mi/h {{weatherData.list[0].wind.deg | compass}}
+          </div>
+          <div class="info-block-value" *ngIf="unit === 'Metric'">
+            Wind: {{weatherData.list[0].wind.speed * 3.6 | number: '1.0-0'}}km/h {{weatherData.list[0].wind.deg | compass}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
