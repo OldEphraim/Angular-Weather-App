@@ -25,8 +25,8 @@ export class AppComponent implements OnInit {
     console.log(this.unit);
   }
 
-  private getWeatherData(cityName: string) {
-    this.weatherService.getWeatherData(cityName)
+  private getWeatherData(cityName: string, stateCode?: string, countryCode?: string) {
+    this.weatherService.getWeatherData(cityName, stateCode, countryCode)
     .subscribe({
       next: (response) => {
         this.weatherData = response;

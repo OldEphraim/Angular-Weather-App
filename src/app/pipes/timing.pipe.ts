@@ -5,23 +5,20 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimingPipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: number): string {
+    const date = new Date(value * 1000); 
 
-  let array = Array.from<string>(value);
-  let newArr = [];
-  for (let i = 11; i < 16; i++) {
-    newArr.push(array[i]);
-  }
-  let concat = Number(newArr[0] + newArr[1]);
-  if (concat <= 12) {
-    return newArr.join('') + " AM";
-  }
-  if (concat > 12 && concat < 21) {
-    return ("0" + (concat - 12).toString() + ":00 PM")
-  }
-  if (concat >= 21) {
-    return ((concat - 12).toString() + ":00 PM")
-  }
+    let hours = date.getHours();  
+    const minutes = date.getMinutes();  
+
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+
+    return `${hours}:${minutesStr} ${ampm}`;
   }
 
 }

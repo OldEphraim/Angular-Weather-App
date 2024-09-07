@@ -12,55 +12,55 @@
 </div></div>
 <div class="container" *ngIf="weatherData">
   <div class="upper-data">
-    <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/cold-landscape.jpg" alt="cold-landscape" *ngIf="weatherData.list[0].main.temp < 283">
-    <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/hot-landscape.jpg" alt="hot-landscape" *ngIf="weatherData.list[0].main.temp >= 283">
+    <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/cold-landscape.jpg" alt="cold-landscape" *ngIf="weatherData.current.temp < 283">
+    <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/hot-landscape.jpg" alt="hot-landscape" *ngIf="weatherData.current.temp >= 283">
     <div class="weather-data">
-      <div class="location">{{weatherData.city.name}}</div>
-      <div class="temperature" *ngIf="unit === 'American' || unit === undefined">{{(weatherData.list[0].main.temp - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F</div>
-      <div class="temperature" *ngIf="unit === 'Metric'">{{weatherData.list[0].main.temp - 273.15 | number: '1.0-0'}}°C</div>
+      <div class="location">{{this.cityName}}</div>
+      <div class="temperature" *ngIf="unit === 'American' || unit === undefined">{{(weatherData.current.temp - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F</div>
+      <div class="temperature" *ngIf="unit === 'Metric'">{{weatherData.current.temp - 273.15 | number: '1.0-0'}}°C</div>
     </div>
   </div>
   <div class="lower-data">
-    <div class="more-info-label">Weather in {{weatherData.city.name}} on {{weatherData.list[0].dt_txt | date}} by {{weatherData.list[0].dt_txt | timing}}</div>
+    <div class="more-info-label">Weather in {{this.cityName}} on {{weatherData.daily[0].dt | date}} by {{weatherData.daily[0].dt | timing}}</div>
     <div class="more-info-container">
       <div class="info-block">
         <div class="info-block-label">
           <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/max-temp.png" alt="max-temp" id="img1">
           <div class="info-block-value" *ngIf="unit === 'American' || unit === undefined">
-            Expected High: {{(weatherData.list[0].main.temp_max - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F
+            Expected High: {{(weatherData.daily[0].temp.max - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F
           </div>
           <div class="info-block-value" *ngIf="unit === 'Metric'">
-            Expected High: {{weatherData.list[0].main.temp_max - 273.15 | number: '1.0-0'}}°C
+            Expected High: {{weatherData.daily[0].temp.max - 273.15 | number: '1.0-0'}}°C
           </div>
         </div>
         <div class="info-block-label">
           <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/min-temp.png" alt="min-temp" id="img2">
           <div class="info-block-value" *ngIf="unit === 'American' || unit === undefined">
-            Expected Low: {{(weatherData.list[0].main.temp_min - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F
+            Expected Low: {{(weatherData.daily[0].temp.min - 273.15) * (9/5) + 32 | number: '1.0-0'}}°F
           </div>
           <div class="info-block-value" *ngIf="unit === 'Metric'">
-            Expected Low: {{weatherData.list[0].main.temp_min - 273.15 | number: '1.0-0'}}°C
+            Expected Low: {{weatherData.daily[0].temp.min - 273.15 | number: '1.0-0'}}°C
           </div>
         </div>
         <div class="info-block-label">
           <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/chance-precip.png" alt="chance-precip" id="img3">
-          <div class="info-block-value" *ngIf="weatherData.list[0].main.temp > 275">
-            Rain Chance: {{weatherData.list[0].pop * 100}}%
+          <div class="info-block-value" *ngIf="weatherData.current.temp > 275">
+            Rain Chance: {{weatherData.daily[0].pop * 100}}%
           </div>
-          <div class="info-block-value" *ngIf="weatherData.list[0].main.temp > 270 && weatherData.list[0].main.temp <= 275">
-            Sleet Chance: {{weatherData.list[0].pop * 100}}%
+          <div class="info-block-value" *ngIf="weatherData.current.temp > 270 && weatherData.current.temp <= 275">
+            Sleet Chance: {{weatherData.daily[0].pop * 100}}%
           </div>
-          <div class="info-block-value" *ngIf="weatherData.list[0].main.temp <= 270">
-            Snow Chance: {{weatherData.list[0].pop * 100}}%
+          <div class="info-block-value" *ngIf="weatherData.current.temp <= 270">
+            Snow Chance: {{weatherData.daily[0].pop * 100}}%
           </div>
         </div>
         <div class="info-block-label">
           <img src="https://raw.githubusercontent.com/OldEphraim/Angular-Weather-App/master/src/assets/wind.png" alt="wind" id="img4">
           <div class="info-block-value" *ngIf="unit === 'American' || unit === undefined">
-            Wind: {{weatherData.list[0].wind.speed * 2.237 | number: '1.0-0'}}mi/h {{weatherData.list[0].wind.deg | compass}}
+            Wind: {{weatherData.daily[0].wind_speed * 2.237 | number: '1.0-0'}}mi/h {{weatherData.daily[0].wind_deg | compass}}
           </div>
           <div class="info-block-value" *ngIf="unit === 'Metric'">
-            Wind: {{weatherData.list[0].wind.speed * 3.6 | number: '1.0-0'}}km/h {{weatherData.list[0].wind.deg | compass}}
+            Wind: {{weatherData.daily[0].wind_speed * 3.6 | number: '1.0-0'}}km/h {{weatherData.daily[0].wind_deg | compass}}
           </div>
         </div>
       </div>
