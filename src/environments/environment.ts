@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   weatherApiBaseUrl: 'http://api.openweathermap.org/geo/1.0/direct?q=',
-  APIKey: 'd5fcf1f8a6dc649bca7e21026ae0f19f'
+  APIKey: 'd5fcf1f8a6dc649bca7e21026ae0f19f',
 };
 
 /*
